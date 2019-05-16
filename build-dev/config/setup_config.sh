@@ -69,6 +69,18 @@ consensus-keys=${KEYMAP["consensus_keys"]}
 check_script=upgrade/ubuntu.sh
 auto_update=false
 EOF
+
+if [ -n "${KETO_IS_MASTER}" ] ; then
+cat << EOF >> $KETO_CONFIG
+# master
+is_master=true
+is_network_session_generator=true
+master_password=123456
+master-public-key=keys/ketod/master/public_key.pem
+master-private-key=keys/ketod/master/private_key.pem
+network_fee_ratio=1
+EOF
+fi
 }
 
 setCoreConfig() {
@@ -78,10 +90,12 @@ setCoreConfig() {
 
 getAccountInfo
 
-if [ -n "${KETO_rpc_peer}" ] ; then
-    KEYMAP["rpc_peer"]="${KETO_rpc_peer}"
-else
+if [ -z "${KETO_rpc_peer}" ] ; then
     KEYMAP["rpc_peer"]="34.241.60.196"
+elif [ "${KETO_rpc_peer}" == "EMPTY" ] ; then
+    KEYMAP["rpc_peer"]=""
+else
+    KEYMAP["rpc_peer"]="${KETO_rpc_peer}"
 fi
 if [ -n "${KETO_consensus_keys}" ] ; then
     KEYMAP["consensus_keys"]="${KETO_consensus_keys}"

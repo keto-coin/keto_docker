@@ -1,0 +1,21 @@
+version: '3.3'
+services:
+  build-container: 
+    image: brettchaldecott/keto-coin-dev:latest
+    volumes:
+      - ../../src/:/opt/keto/src/
+      - ../../scripts/:/opt/keto/scripts/
+      - ../../builds:/opt/keto/builds/
+      - ../../build_in_docker.sh:/opt/keto/build.sh
+      - ../../Doxyfile:/opt/keto/Doxyfile
+      - ../../CMakeLists.txt:/opt/keto/CMakeLists.txt
+      - ../../install/:/opt/keto/build/install/
+      - ../../LICENSE.md:/opt/keto/LICENSE.md
+      - ../../deps_build/CMakeLists.txt:/opt/keto/deps_build/CMakeLists.txt
+      - ../../documents/:/opt/keto/documents/
+      - ../../resources/:/opt/keto/resources/
+      - ../../keys/:/opt/keto/keys/
+      - ../../contracts/:/opt/keto/contracts/
+      - ../../keto.doxygen.in:/opt/keto/keto.doxygen.in
+    environment:
+      - HOME=/
