@@ -3,13 +3,15 @@ services:
   build-container: 
     image: brettchaldecott/keto-coin-dev:latest
     volumes:
-      - ../../src/:/opt/keto/src/
+      - source-sync:/opt/keto/src/:nocopy
       - ../../scripts/:/opt/keto/scripts/
       - ../../builds:/opt/keto/builds/
-      - ../../build_in_docker.sh:/opt/keto/build.sh
+      - ../../builds/scripts/build_in_docker.sh:/opt/keto/build.sh
       - ../../Doxyfile:/opt/keto/Doxyfile
       - ../../CMakeLists.txt:/opt/keto/CMakeLists.txt
-      - ../../install/:/opt/keto/build/install/
+      - depsbuild-sync:/opt/keto/deps_build/:nocopy
+      - build-sync:/opt/keto/build/:nocopy
+      - ide-sync:/opt/keto/ide_build/:nocopy
       - ../../LICENSE.md:/opt/keto/LICENSE.md
       - ../../deps_build/CMakeLists.txt:/opt/keto/deps_build/CMakeLists.txt
       - ../../documents/:/opt/keto/documents/
@@ -17,5 +19,18 @@ services:
       - ../../keys/:/opt/keto/keys/
       - ../../contracts/:/opt/keto/contracts/
       - ../../keto.doxygen.in:/opt/keto/keto.doxygen.in
+      - dependency-sync:/opt/dependencies/:nocopy
     environment:
       - HOME=/
+
+volumes:
+  build-sync:
+    external: true
+  source-sync:
+    external: true
+  dependency-sync:
+    external: true
+  depsbuild-sync:
+    external: true
+  ide-sync:
+    external: true

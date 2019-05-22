@@ -1,0 +1,20 @@
+version: "2"
+options:
+  verbose: false
+syncs:
+  bin-sync:
+    notify_terminal: true
+    src: ../../build/install/bin
+    sync_host_ip: 'auto'
+    sync_strategy: 'unison'
+  lib-sync:
+    notify_terminal: true
+    src: ../../build/install/lib
+    sync_host_ip: 'auto'
+    sync_strategy: 'unison'
+  shared-sync:
+    notify_terminal: true
+    src: ../../build/install/shared
+    sync_host_ip: 'auto'
+    sync_strategy: 'unison'
+

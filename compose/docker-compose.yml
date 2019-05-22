@@ -32,11 +32,11 @@ services:
       - KETO_rpc_peer=EMPTY
       - KETO_IS_MASTER=TRUE
     volumes:
-      - ../../install/bin:/opt/keto/bin/
-      - ../../install/config/genesis.json:/opt/keto/config/genesis.json
-      - ../../install/lib:/opt/keto/lib/
-      - ../../install/shared:/opt/keto/shared/
-      - ./data/core/master:/opt/keto/core/
+      - bin-sync:/opt/keto/bin/
+      - lib-sync:/opt/keto/lib/
+      - shared-sync:/opt/keto/shared/
+      - ../../build/install/config/genesis.json:/opt/keto/config/genesis.json
+      - master-data:/opt/keto/core/
   node1:
     build:
       context: ../build-dev/
@@ -46,10 +46,10 @@ services:
       - KETO_rpc_peer=master
       - KETO_consensus_keys=
     volumes:
-      - ../../install/bin:/opt/keto/bin/
-      - ../../install/lib:/opt/keto/lib/
-      - ../../install/shared:/opt/keto/shared/
-      - ./data/core/node1:/opt/keto/core/
+      - bin-sync:/opt/keto/bin/
+      - lib-sync:/opt/keto/lib/
+      - shared-sync:/opt/keto/shared/
+      - node1-data:/opt/keto/core/
     depends_on:
       - master
   node2:
@@ -61,9 +61,20 @@ services:
       - KETO_rpc_peer=master
       - KETO_consensus_keys=
     volumes:
-      - ../../install/bin:/opt/keto/bin/
-      - ../../install/lib:/opt/keto/lib/
-      - ../../install/shared:/opt/keto/shared/
-      - ./data/core/node2:/opt/keto/core/
+      - bin-sync:/opt/keto/bin/
+      - lib-sync:/opt/keto/lib/
+      - shared-sync:/opt/keto/shared/
+      - node2-data:/opt/keto/core/
     depends_on:
       - master
+
+volumes:
+  master-data:
+  node1-data:
+  node2-data:
+  bin-sync:
+    external: true
+  lib-sync:
+    external: true
+  shared-sync:
+    external: true
