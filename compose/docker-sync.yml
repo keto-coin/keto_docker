@@ -17,4 +17,9 @@ syncs:
     src: ../../build/install/shared
     sync_host_ip: 'auto'
     sync_strategy: 'unison'
+  wallet-sync:
+    notify_terminal: true
+    src: ../../src/web/keto-wallet
+    sync_host_ip: 'auto'
+    sync_strategy: 'unison'
 
