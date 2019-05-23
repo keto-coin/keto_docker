@@ -38,12 +38,12 @@ then
     cd ${COMPOSE_DIR} && docker-compose ps
 elif [ "${COMMAND}" == "logs" ]
 then
-    cd ${COMPOSE_DIR} && docker-compose logs
+    cd ${COMPOSE_DIR} && docker-compose logs -f
 elif [ "${COMMAND}" == "clean" ]
 then
     cd ${COMPOSE_DIR} && docker-compose down && docker-sync clean
 elif [ "${COMMAND}" == "check" ]
 then
-    echo "${CURRENT_STATE}"
+    echo -n "${CURRENT_STATE}"
 fi
 
