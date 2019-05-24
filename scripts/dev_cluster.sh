@@ -38,7 +38,7 @@ then
     cd ${COMPOSE_DIR} && docker-compose ps
 elif [ "${COMMAND}" == "logs" ]
 then
-    cd ${COMPOSE_DIR} && docker-compose logs -f
+    cd ${COMPOSE_DIR} && docker-compose "$@"
 elif [ "${COMMAND}" == "clean" ]
 then
     cd ${COMPOSE_DIR} && docker-compose down && docker-sync clean

@@ -34,7 +34,7 @@ services:
     volumes:
       - ../../build/install/bin/:/opt/keto/bin/
       - ../../build/install/lib/:/opt/keto/lib/
-      - shared-sync:/opt/keto/shared/:nocopy
+      - ../../build/install/shared/:/opt/keto/shared/
       - ../../build/install/config/genesis.json:/opt/keto/config/genesis.json
       - master-data:/opt/keto/data/
   node1:
@@ -48,7 +48,7 @@ services:
     volumes:
       - ../../build/install/bin/:/opt/keto/bin/
       - ../../build/install/lib/:/opt/keto/lib/
-      - shared-sync:/opt/keto/shared/:nocopy
+      - ../../build/install/shared/:/opt/keto/shared/
       - node1-data:/opt/keto/data/
     depends_on:
       - master
@@ -63,7 +63,7 @@ services:
     volumes:
       - ../../build/install/bin/:/opt/keto/bin/
       - ../../build/install/lib/:/opt/keto/lib/
-      - shared-sync:/opt/keto/shared/:nocopy
+      - ../../build/install/shared/:/opt/keto/shared/
       - node2-data:/opt/keto/data/
     depends_on:
       - master
@@ -75,6 +75,4 @@ volumes:
   node1-data:
   node2-data:
   wallet-sync:
-    external: true
-  shared-sync:
     external: true
