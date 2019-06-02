@@ -83,6 +83,7 @@ master-public-key=keys/ketod/master/public_key.pem
 master-private-key=keys/ketod/master/private_key.pem
 network_fee_ratio=1
 network_session_length=5
+network_consensus_heartbeat=30
 EOF
 fi
 }
