@@ -65,6 +65,7 @@ block_producer_enabled=true
 # rpc peer
 rpc-peer=${KEYMAP["rpc_peer"]}
 consensus-keys=${KEYMAP["consensus_keys"]}
+peers=data/peers
 # auto upgrade
 check_script=upgrade/ubuntu.sh
 auto_update=false
