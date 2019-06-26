@@ -70,8 +70,8 @@ peers=data/peers
 check_script=upgrade/ubuntu.sh
 auto_update=false
 # network protocol
-network_protocol_delay=1
-network_protocol_count=1
+network_protocol_delay=10
+network_protocol_count=10
 EOF
 
 if [ -n "${KETO_IS_MASTER}" ] ; then
@@ -83,8 +83,8 @@ master_password=123456
 master-public-key=keys/ketod/master/public_key.pem
 master-private-key=keys/ketod/master/private_key.pem
 network_fee_ratio=1
-network_session_length=5
-network_consensus_heartbeat=30
+network_session_length=10
+network_consensus_heartbeat=60
 EOF
 fi
 }
