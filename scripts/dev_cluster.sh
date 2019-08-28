@@ -39,6 +39,7 @@ check_info() {
     node_check "master_1"
     node_check "node1_1"
     node_check "node2_1"
+    node_check "node3_1"
 }
 
 COMMAND=$1

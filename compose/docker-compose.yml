@@ -67,6 +67,21 @@ services:
       - node2-data:/opt/keto/data/
     depends_on:
       - master
+  node3:
+    build:
+      context: ../build-dev/
+    privileged: true
+    command: /opt/keto/run_keto.sh
+    environment:
+      - KETO_rpc_peer=master
+      - KETO_consensus_keys=
+    volumes:
+      - ../../build/install/bin/:/opt/keto/bin/
+      - ../../build/install/lib/:/opt/keto/lib/
+      - ../../build/install/shared/:/opt/keto/shared/
+      - node3-data:/opt/keto/data/
+    depends_on:
+      - master
 
 volumes:
   wallet_node_modules:
@@ -74,5 +89,6 @@ volumes:
   master-data:
   node1-data:
   node2-data:
+  node3-data:
   wallet-sync:
     external: true
