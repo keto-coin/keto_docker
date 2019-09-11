@@ -37,6 +37,8 @@ services:
       - ../../build/install/shared/:/opt/keto/shared/
       - ../../build/install/config/genesis.json:/opt/keto/config/genesis.json
       - master-data:/opt/keto/data/
+    cap_add:
+      - SYS_PTRACE
   node1:
     build:
       context: ../build-dev/
@@ -52,6 +54,8 @@ services:
       - node1-data:/opt/keto/data/
     depends_on:
       - master
+    cap_add:
+      - SYS_PTRACE
   node2:
     build:
       context: ../build-dev/
@@ -67,6 +71,8 @@ services:
       - node2-data:/opt/keto/data/
     depends_on:
       - master
+    cap_add:
+      - SYS_PTRACE
   node3:
     build:
       context: ../build-dev/
@@ -82,6 +88,8 @@ services:
       - node3-data:/opt/keto/data/
     depends_on:
       - master
+    cap_add:
+      - SYS_PTRACE
 
 volumes:
   wallet_node_modules:

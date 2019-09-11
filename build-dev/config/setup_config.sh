@@ -62,6 +62,7 @@ genesis_config=config/genesis.json
 # default block
 default_block=false
 block_producer_enabled=true
+block_producer_safe_mode=false
 # rpc peer
 rpc-peer=${KEYMAP["rpc_peer"]}
 consensus-keys=${KEYMAP["consensus_keys"]}
