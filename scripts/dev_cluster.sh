@@ -31,16 +31,19 @@ node_check() {
     else
         block_status="unsynchronized";
     fi
-    echo "${node}-${network}-${block_status}"
+    producer_count="$(parse_logs "${node}" "Node is now a producer")"
+    printf "%8s\t%12s\t%14s\t%8s\n" ${node} ${network} ${block_status} ${producer_count}
 }
 
 check_info() {
     logs="$(get_logs)"
+    printf "%8s\t%12s\t%14s\t%8s\n" "node" "network" "status" "producer"
     node_check "master_1"
     node_check "node1_1"
     node_check "node2_1"
     node_check "node3_1"
 }
+
 
 COMMAND=$1
 WORK_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
@@ -50,6 +53,7 @@ if [ -z "${COMMAND}" ]
 then
     echo "Must provide a cluster command"
     echo "  start - start the cluster."
+    echo "  rebuild  - rebuild and start the cluster."
     echo "  stop  - stop the cluster."
     echo "  status - status of the cluster."
     echo "  info - info of the cluster."
@@ -70,6 +74,14 @@ then
         exit 0
     fi
     cd ${COMPOSE_DIR} && docker-sync start && docker-compose up -d
+elif [ "${COMMAND}" == "rebuild" ]
+then
+    if [ -n "$CURRENT_STATE" ]
+    then
+        echo "Running"
+        exit 0
+    fi
+    cd ${COMPOSE_DIR} && docker-sync start && docker-compose up --force-recreate -d
 elif [ "${COMMAND}" == "stop" ]
 then
     cd ${COMPOSE_DIR} && docker-compose stop && docker-sync stop
