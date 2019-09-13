@@ -3,7 +3,8 @@
 declare -a logs
 
 get_logs() {
-    echo -e "$(cd $COMPOSE_DIR && docker-compose logs)"
+    local node=$1
+    echo -e "$(docker exec -it compose_${node} bash -c 'cat /opt/keto/log/ketod_0.log')"
 }
 
 check_state() {
@@ -13,30 +14,31 @@ check_state() {
 parse_logs() {
     local node=$1
     local expression=$2
-    echo "$(echo -e "${logs[@]}" | grep "${node}" | grep "${expression}" | wc -l)"
+    echo "$(echo -e "${logs[@]}" | grep "${expression}" | wc -l)"
 }
 
 node_check() {
     local node=$1
+    logs="$(get_logs ${node})"
     network="$(parse_logs "${node}" "Network intialization is now complete")"
-    base_count=1
-    if [ "${network}" -gt "${base_count}" ] ; then
-        network="connected";
-    else
-        network="initializing";
-    fi
+    #base_count=0
+    #if [ "${network}" -gt "${base_count}" ] ; then
+    #    network="connected";
+    #else
+    #    network="initializing";
+    #fi
     block_status="$(parse_logs "${node}" "Synchronization has now been completed")"
-    if [ "${block_status}" -gt "0" ] ; then
-        block_status="synchronized";
-    else
-        block_status="unsynchronized";
-    fi
+    #if [ "${block_status}" -gt "0" ] ; then
+    #    block_status="synchronized";
+    #else
+    #    block_status="unsynchronized";
+    #fi
     producer_count="$(parse_logs "${node}" "Node is now a producer")"
     printf "%8s\t%12s\t%14s\t%8s\n" ${node} ${network} ${block_status} ${producer_count}
 }
 
 check_info() {
-    logs="$(get_logs)"
+    #logs="$(get_logs)"
     printf "%8s\t%12s\t%14s\t%8s\n" "node" "network" "status" "producer"
     node_check "master_1"
     node_check "node1_1"
@@ -81,7 +83,7 @@ then
         echo "Running"
         exit 0
     fi
-    cd ${COMPOSE_DIR} && docker-sync start && docker-compose up --force-recreate -d
+    cd ${COMPOSE_DIR} && docker-sync start && docker-compose up --build --always-recreate-deps --force-recreate -d
 elif [ "${COMMAND}" == "stop" ]
 then
     cd ${COMPOSE_DIR} && docker-compose stop && docker-sync stop
@@ -97,7 +99,7 @@ then
         echo "  log <node>"
         exit -1
     fi
-    cd ${COMPOSE_DIR} && docker-compose logs | grep ${NODE} | cut -d"|" -f2-
+    cd ${COMPOSE_DIR} && docker-compose logs ${NODE}
 elif [ "${COMMAND}" == "clean" ]
 then
     cd ${COMPOSE_DIR} && docker-compose down && docker-sync clean

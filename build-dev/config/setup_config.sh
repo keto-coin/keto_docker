@@ -35,7 +35,7 @@ base-data-dir= var/db
 # log directory
 log-file=ketod_%N.log
 # log level
-log-level=debug
+log-level=info
 # the account hash
 account-hash=${KEYMAP["account_hash"]}
 # public key dir
