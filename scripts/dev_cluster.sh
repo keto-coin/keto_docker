@@ -44,6 +44,8 @@ check_info() {
     node_check "node1_1"
     node_check "node2_1"
     node_check "node3_1"
+    node_check "node4_1"
+    node_check "readnode_1"
 }
 
 
@@ -57,6 +59,7 @@ then
     echo "  start - start the cluster."
     echo "  rebuild  - rebuild and start the cluster."
     echo "  stop  - stop the cluster."
+    echo "  restart  - restart the container."
     echo "  status - status of the cluster."
     echo "  info - info of the cluster."
     echo "  logs  - attach and print the logs."
@@ -102,7 +105,7 @@ then
     cd ${COMPOSE_DIR} && docker-compose logs ${NODE}
 elif [ "${COMMAND}" == "clean" ]
 then
-    cd ${COMPOSE_DIR} && docker-compose down && docker-sync clean
+    cd ${COMPOSE_DIR} && docker-compose down && docker-sync clean && docker volume prune -f
 elif [ "${COMMAND}" == "check" ]
 then
     echo -n "${CURRENT_STATE}"

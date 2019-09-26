@@ -151,7 +151,7 @@ mkdir -p ${HOME}/opt/librdf
 cd ${TEMP_DIR}
 git clone git://github.com/dajobe/raptor.git
 cd ${TEMP_DIR}/raptor
-CFLAGS=-fPIC CPPFLAGS=-fPIC ./autogen.sh --prefix=${HOME}/opt/librdf --enable-shared=no
+CFLAGS=-fPIC CPPFLAGS=-fPIC ./autogen.sh --prefix=${HOME}/opt/librdf --enable-shared=no --with-threads
 make
 make install
 cd ${HOME}
@@ -160,7 +160,7 @@ rm -rf ${TEMP_DIR}/raptor
 cd ${TEMP_DIR}
 git clone git://github.com/dajobe/rasqal.git
 cd ${TEMP_DIR}/rasqal
-CFLAGS=-fPIC CPPFLAGS=-fPIC PKG_CONFIG_PATH=${HOME}/opt/librdf/lib/pkgconfig ./autogen.sh --prefix=${HOME}/opt/librdf --enable-shared=no
+CFLAGS=-fPIC CPPFLAGS=-fPIC PKG_CONFIG_PATH=${HOME}/opt/librdf/lib/pkgconfig ./autogen.sh --prefix=${HOME}/opt/librdf --enable-shared=no --with-threads
 make
 make install
 cd ${HOME}
@@ -169,7 +169,7 @@ rm -rf ${TEMP_DIR}/rasqal
 cd ${TEMP_DIR}
 git clone https://github.com/keto-coin/librdf.git
 cd ${TEMP_DIR}/librdf
-CFLAGS=-fPIC CPPFLAGS=-fPIC PKG_CONFIG_PATH=${HOME}/opt/librdf/lib/pkgconfig ./autogen.sh --prefix=${HOME}/opt/librdf --enable-shared=no --with-bdb
+CFLAGS=-fPIC CPPFLAGS=-fPIC PKG_CONFIG_PATH=${HOME}/opt/librdf/lib/pkgconfig ./autogen.sh --prefix=${HOME}/opt/librdf --enable-shared=no --with-bdb --with-threads
 make
 make install
 cd ${HOME}

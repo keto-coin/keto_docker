@@ -12,4 +12,9 @@ syncs:
     src: ../../src/web/keto-wallet
     sync_host_ip: 'auto'
     sync_strategy: 'unison'
+  explorer-sync:
+    notify_terminal: true
+    src: ../../src/web/keto-blockchain-explorer
+    sync_host_ip: 'auto'
+    sync_strategy: 'unison'
 

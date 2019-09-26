@@ -23,7 +23,11 @@ echo "Keto started with a PID of ${ketod_pid}"
 
 pid_array=(${ketod_pid})
 
-for pid in ${pid_array[*]}; do
-    echo "Wait for ${pid}"
-    wait $pid
-done
+if [ -n "${KETO_TAIL}" ] ; then
+    tail -f /dev/null
+else
+    for pid in ${pid_array[*]}; do
+        echo "Wait for ${pid}"
+        wait $pid
+    done
+fi

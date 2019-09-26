@@ -2,6 +2,7 @@
 
 
 declare -A KEYMAP
+KETO_PRODUCER_ENABLED="true"
 
 getAccountInfo() {
     KEY_DATA=$(/opt/keto/bin/keto_cli.sh -A | awk -F"[{}]" '{print $2}')
@@ -61,7 +62,8 @@ routes=data/routes
 genesis_config=config/genesis.json
 # default block
 default_block=false
-block_producer_enabled=true
+block_producer_enabled=${KETO_PRODUCER_ENABLED}
+block_producer_safe_mode=false
 # rpc peer
 rpc-peer=${KEYMAP["rpc_peer"]}
 consensus-keys=${KEYMAP["consensus_keys"]}
@@ -90,9 +92,11 @@ else
     KEYMAP["consensus_keys"]=""
 fi
 
+if [ -n "${PRODUCER_ENABLED}" ] ; then
+    KETO_PRODUCER_ENABLED="${PRODUCER_ENABLED}"
+fi
+
 setKetoConfig
-
-
 
 
 
