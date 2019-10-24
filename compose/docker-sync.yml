@@ -17,4 +17,9 @@ syncs:
     src: ../../src/web/keto-blockchain-explorer
     sync_host_ip: 'auto'
     sync_strategy: 'unison'
+  gateway-sync:
+    notify_terminal: true
+    src: ../../src/web/keto-middlware-proxy
+    sync_host_ip: 'auto'
+    sync_strategy: 'unison'
 

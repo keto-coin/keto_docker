@@ -1,4 +1,4 @@
-FROM ubuntu:16.04
+FROM ubuntu:18.04
 MAINTAINER Brett Chaldecott "brett.chaldecott@gmail.com"
 
 WORKDIR /opt/keto
@@ -7,9 +7,7 @@ ADD install_dependencies.sh /opt/keto/install_dependencies.sh
 RUN apt-get update \
     && apt-get upgrade -y \
     && apt-get -y install wget \
-    && wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key | apt-key add - \
-    && apt-get update \
-    && apt-get -y install clang-4.0 lldb-4.0 libclang-4.0-dev cmake make \
+    && apt-get -y install clang-6.0 lldb-4.0 libclang-6.0-dev cmake make \
                                  libbz2-dev libssl-dev libgmp3-dev \
                                  autotools-dev build-essential \
                                  libbz2-dev libicu-dev python-dev \

@@ -1,4 +1,4 @@
-FROM ubuntu:16.04
+FROM ubuntu:18.04
 MAINTAINER Brett Chaldecott "brett.chaldecott@gmail.com"
 
 RUN apt-get clean && apt-get update \

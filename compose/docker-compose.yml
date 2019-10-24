@@ -31,6 +31,7 @@ services:
     depends_on:
       - explorer
       - readnode
+      - gateway
   wallet:
     image: node:11
     volumes:
@@ -49,9 +50,22 @@ services:
     command: bash -c "npm install && npm run start"
     depends_on:
       - readnode
+  gateway:
+    image: node:11
+    volumes:
+      - gateway-sync:/usr/src/service
+      - explorer_node_modules:/user/src/service/node_modules
+      - ../../keys/cli/private_key.pem:/usr/src/service/private_key.pem
+      - ../../src/protocol/proto/HandShake.proto:/usr/src/service/HandShake.proto
+    working_dir: /usr/src/service
+    command: bash -c "npm install && npm start"
+    depends_on:
+      - readnode
   master:
+    image: keto/build-dev
     build:
-      context: ../build-dev/
+      context: ../../
+      dockerfile: ./docker/build-dev/Dockerfile
     privileged: true
     command: /opt/keto/run_keto.sh
     environment:
@@ -71,8 +85,10 @@ services:
     cap_add:
       - SYS_PTRACE
   node1:
+    image: keto/build-dev
     build:
-      context: ../build-dev/
+      context: ../../
+      dockerfile: ./docker/build-dev/Dockerfile
     privileged: true
     command: /opt/keto/run_keto.sh
     environment:
@@ -89,8 +105,10 @@ services:
     cap_add:
       - SYS_PTRACE
   node2:
+    image: keto/build-dev
     build:
-      context: ../build-dev/
+      context: ../../
+      dockerfile: ./docker/build-dev/Dockerfile
     privileged: true
     command: /opt/keto/run_keto.sh
     environment:
@@ -107,8 +125,10 @@ services:
     cap_add:
       - SYS_PTRACE
   node3:
+    image: keto/build-dev
     build:
-      context: ../build-dev/
+      context: ../../
+      dockerfile: ./docker/build-dev/Dockerfile
     privileged: true
     command: /opt/keto/run_keto.sh
     environment:
@@ -125,8 +145,10 @@ services:
     cap_add:
       - SYS_PTRACE
   node4:
+    image: keto/build-dev
     build:
-      context: ../build-dev/
+      context: ../../
+      dockerfile: ./docker/build-dev/Dockerfile
     privileged: true
     command: /opt/keto/run_keto.sh
     environment:
@@ -143,8 +165,10 @@ services:
     cap_add:
       - SYS_PTRACE
   readnode:
+    image: keto/build-dev
     build:
-      context: ../build-dev/
+      context: ../../
+      dockerfile: ./docker/build-dev/Dockerfile
     privileged: true
     command: /opt/keto/run_keto.sh
     environment:
@@ -166,6 +190,7 @@ services:
 volumes:
   wallet_node_modules:
   explorer_node_modules:
+  gateway_node_modules:
   data_node_modules:
   master-data:
   node1-data:
@@ -176,4 +201,6 @@ volumes:
   wallet-sync:
     external: true
   explorer-sync:
+    external: true
+  gateway-sync:
     external: true

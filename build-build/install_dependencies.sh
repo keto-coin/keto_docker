@@ -10,9 +10,9 @@ OPENSSL_LIBRARIES=/usr/local/opt/openssl/lib
 HOME=/
 TEMP_DIR=/tmp/
 VERSION=1.0
-BUILD_FORKS="-j4"
+BUILD_FORKS="-j$(nproc)"
 
-BOOST_ROOT=${HOME}/opt/boost_1_66_0
+BOOST_ROOT=${HOME}/opt/boost_1_69_0
 BINARYEN_BIN=${HOME}/opt/binaryen/bin
 OPENSSL_ROOT_DIR=/usr/local/opt/openssl
 OPENSSL_LIBRARIES=/usr/local/opt/openssl/lib
@@ -59,15 +59,29 @@ COMPILE_CONTRACTS=1
 # Define default arguments.
 CMAKE_BUILD_TYPE=RelWithDebugInfo
 
+# remove cmake
+#echo "Reinstall cmake from source"
+#apt remove --purge --auto-remove cmake
+#CMAKE_VERSION=3.15
+#CMAKE_BUILD=4
+#cd ${TEMP_DIR}
+#wget https://cmake.org/files/v${CMAKE_VERSION}/cmake-${CMAKE_VERSION}.${CMAKE_BUILD}.tar.gz
+#tar -xzvf cmake-${CMAKE_VERSION}.${CMAKE_BUILD}.tar.gz
+#cd cmake-${CMAKE_VERSION}.${CMAKE_BUILD}/
+#./bootstrap
+#make -j$(nproc)
+#make install
+
 # install boost
+echo "Build boost"
 cd ${TEMP_DIR}
-export BOOST_ROOT=${HOME}/opt/boost_1_66_0
-curl -L https://dl.bintray.com/boostorg/release/1.66.0/source/boost_1_66_0.tar.bz2 > boost_1.66.0.tar.bz2
-tar xvf boost_1.66.0.tar.bz2
-cd boost_1_66_0/
+export BOOST_ROOT=${HOME}/opt/boost_1_71_0
+curl -L https://dl.bintray.com/boostorg/release/1.71.0/source/boost_1_71_0.tar.bz2 > boost_1.71.0.tar.bz2
+tar xvf boost_1.71.0.tar.bz2
+cd boost_1_71_0/
 ./bootstrap.sh "--prefix=$BOOST_ROOT"
-./b2 install
-rm -rf ${TEMP_DIR}/boost_1_66_0/
+./b2 link=static cxxflags="-fPIC" cflags="-fPIC" visibility=global install
+rm -rf ${TEMP_DIR}/boost_1_71_0/
 
 # install secp256k1-zkp (Cryptonomex branch)
 #cd ${TEMP_DIR}
@@ -140,6 +154,7 @@ cd ${TEMP_DIR}
 git clone https://github.com/randombit/botan.git
 mkdir -p ${HOME}/opt/botan
 cd ${TEMP_DIR}/botan
+git checkout "2.12.1"
 ./configure.py --cxxflags=-fPIC --prefix=${HOME}/opt/botan --with-openssl --disable-shared-library
 make
 make install
@@ -151,7 +166,9 @@ mkdir -p ${HOME}/opt/librdf
 cd ${TEMP_DIR}
 git clone git://github.com/dajobe/raptor.git
 cd ${TEMP_DIR}/raptor
-CFLAGS=-fPIC CPPFLAGS=-fPIC ./autogen.sh --prefix=${HOME}/opt/librdf --enable-shared=no --with-threads
+sed -i "/\$1\${prefix}cleanup(yyscanner)\;/d" scripts/fix-flex.pl
+sed -i "/-Werror-implicit-function-declaration/d" configure.ac
+CFLAGS=-fPIC CPPFLAGS=-fPIC ./autogen.sh --prefix=${HOME}/opt/librdf --enable-shared=no
 make
 make install
 cd ${HOME}
@@ -160,7 +177,9 @@ rm -rf ${TEMP_DIR}/raptor
 cd ${TEMP_DIR}
 git clone git://github.com/dajobe/rasqal.git
 cd ${TEMP_DIR}/rasqal
-CFLAGS=-fPIC CPPFLAGS=-fPIC PKG_CONFIG_PATH=${HOME}/opt/librdf/lib/pkgconfig ./autogen.sh --prefix=${HOME}/opt/librdf --enable-shared=no --with-threads
+sed -i "/\$1\${prefix}cleanup(yyscanner)\;/d" scripts/fix-flex.pl
+sed -i "/-Werror-implicit-function-declaration/d" configure.ac
+CFLAGS=-fPIC CPPFLAGS=-fPIC PKG_CONFIG_PATH=${HOME}/opt/librdf/lib/pkgconfig ./autogen.sh --prefix=${HOME}/opt/librdf --enable-shared=no
 make
 make install
 cd ${HOME}
@@ -169,6 +188,7 @@ rm -rf ${TEMP_DIR}/rasqal
 cd ${TEMP_DIR}
 git clone https://github.com/keto-coin/librdf.git
 cd ${TEMP_DIR}/librdf
+sed -i "/-Werror-implicit-function-declaration/d" configure.ac
 CFLAGS=-fPIC CPPFLAGS=-fPIC PKG_CONFIG_PATH=${HOME}/opt/librdf/lib/pkgconfig ./autogen.sh --prefix=${HOME}/opt/librdf --enable-shared=no --with-bdb --with-threads
 make
 make install
@@ -203,17 +223,21 @@ WASM_LLVM=${HOME}/opt/wasm/
 
 # build wavm
 cd ${TEMP_DIR}
-git clone https://github.com/burntjam/WAVM.git
+git clone https://github.com/WAVM/WAVM.git
+cd WAVM && git checkout nightly/2019-10-17 && cd -
+cd WAVM && find ./ -name "CMakeLists.txt" | xargs sed -i.old "s/find_package(LLVM REQUIRED CONFIG)/find_package(LLVM 6.0 REQUIRED CONFIG PATHS \${LLVM_DIR})/g" && cd -
 mkdir -p ${TEMP_DIR}/WAVM/cmake
 cd ${TEMP_DIR}/WAVM/cmake
-cmake .. -DCMAKE_BUILD_TYPE=RELEASE -DLLVM_DIR=${WASM_LLVM}
+cmake .. -DCMAKE_BUILD_TYPE=RELEASE -DLLVM_DIR=${WASM_LLVM} -DWAVM_ENABLE_STATIC_LINKING=ON
 make
 mkdir -p ${HOME}/opt/wavm/lib
 mkdir -p ${HOME}/opt/wavm/include
-cp ${TEMP_DIR}/WAVM/cmake/lib/* ${HOME}/opt/wavm/lib/.
-cp -rf ${TEMP_DIR}/WAVM/Include/* ${HOME}/opt/wavm/include/.
+find ${TEMP_DIR}/WAVM/cmake  -name "*.a*" -exec cp {} ${HOME}/opt/wavm/lib/. \;
+cp -rvf ${TEMP_DIR}/WAVM/cmake/lib/* ${HOME}/opt/wavm/lib/.
+cp -rvf ${TEMP_DIR}/WAVM/Include/* ${HOME}/opt/wavm/include/.
+cp -rvf ${TEMP_DIR}/WAVM/cmake/Include/* ${HOME}/opt/wavm/include/.
 cd ${HOME}
-rm -rf ${TEMP_DIR}/WAVM
+#rm -rf ${TEMP_DIR}/WAVM
 
 # temp directory
 cd ${TEMP_DIR}
