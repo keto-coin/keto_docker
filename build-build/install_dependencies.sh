@@ -224,7 +224,7 @@ WASM_LLVM=${HOME}/opt/wasm/
 # build wavm
 cd ${TEMP_DIR}
 git clone https://github.com/WAVM/WAVM.git
-cd WAVM && git checkout nightly/2019-10-17 && cd -
+#cd WAVM && git checkout nightly/2019-10-25 && cd -
 cd WAVM && find ./ -name "CMakeLists.txt" | xargs sed -i.old "s/find_package(LLVM REQUIRED CONFIG)/find_package(LLVM 6.0 REQUIRED CONFIG PATHS \${LLVM_DIR})/g" && cd -
 mkdir -p ${TEMP_DIR}/WAVM/cmake
 cd ${TEMP_DIR}/WAVM/cmake
