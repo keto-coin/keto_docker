@@ -52,6 +52,7 @@ services:
       - readnode
   gateway:
     image: node:11
+    restart: on-failure
     volumes:
       - gateway-sync:/usr/src/service
       - explorer_node_modules:/user/src/service/node_modules

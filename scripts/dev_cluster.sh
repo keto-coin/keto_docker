@@ -4,7 +4,7 @@ declare -a logs
 
 get_logs() {
     local node=$1
-    echo -e "$(docker exec -it compose_${node} bash -c 'cat /opt/keto/log/ketod_0.log')"
+    echo -e "$(docker exec -it compose_${node} bash -c 'cat /opt/keto/log/ketod_*.log')"
 }
 
 check_state() {
