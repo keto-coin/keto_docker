@@ -37,6 +37,8 @@ services:
     volumes:
       - wallet-sync:/usr/src/service
       - wallet_node_modules:/user/src/service/node_modules
+      - ../../src/protocol/proto/HandShake.proto:/usr/src/service/HandShake.proto
+      - ../../src/protocol/proto/BlockChain.proto:/usr/src/service/BlockChain.proto
     working_dir: /usr/src/service
     command: bash -c "npm install && npm run start"
     depends_on:
