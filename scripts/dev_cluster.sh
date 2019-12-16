@@ -7,6 +7,24 @@ get_logs() {
     echo -e "$(docker exec -it compose_${node} bash -c 'cat /opt/keto/log/ketod_*.log')"
 }
 
+get_memory_rss() {
+    local node=$1
+    echo `docker exec -it compose_${node} bash -c "ps -o rss= -C ketod | tr -s ' '"`
+}
+
+get_memory_vsz() {
+    local node=$1
+    echo `docker exec -it compose_${node} bash -c "ps -o vsz= -C ketod | tr -s ' '"`
+}
+
+get_memory() {
+    local node=$1
+    local resident_memory_rss=`get_memory_rss ${node}`
+    local resident_memory_vsz=`get_memory_vsz ${node}`
+    local array=("${resident_memory_rss[0]}" "${resident_memory_vsz[@]}")
+    printf "%10s\n" "${array[@]}"
+}
+
 check_state() {
     echo "$(cd $COMPOSE_DIR && docker-compose top)"
 }
@@ -34,12 +52,15 @@ node_check() {
     #    block_status="unsynchronized";
     #fi
     producer_count="$(parse_logs "${node}" "Node is now a producer")"
-    printf "%8s\t%12s\t%14s\t%8s\n" ${node} ${network} ${block_status} ${producer_count}
+
+    local memory_rss=`get_memory_rss "${node}"`
+    local memory_vsz=`get_memory_vsz "${node}"`
+    printf "%10s %4s %4s %4s  %8s\n" ${node} ${network} ${block_status} ${producer_count} ${memory_rss}
 }
 
 check_info() {
     #logs="$(get_logs)"
-    printf "%8s\t%12s\t%14s\t%8s\n" "node" "network" "status" "producer"
+    printf "%10s %4s %4s %4s %8s %8s\n" "node" "net" "stat" "prod" "RSS"
     node_check "master_1"
     node_check "node1_1"
     node_check "node2_1"

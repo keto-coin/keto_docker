@@ -208,9 +208,9 @@ rm -rf ${TEMP_DIR}/json
 cd ${TEMP_DIR}
 mkdir wasm-compiler
 cd wasm-compiler
-git clone --depth 1 --single-branch --branch release_60 https://github.com/llvm-mirror/llvm.git
+git clone --depth 1 --single-branch --branch release_90 https://github.com/llvm-mirror/llvm.git
 cd llvm/tools
-git clone --depth 1 --single-branch --branch release_60 https://github.com/llvm-mirror/clang.git
+git clone --depth 1 --single-branch --branch release_90 https://github.com/llvm-mirror/clang.git
 cd ..
 mkdir build
 cd build
