@@ -17,6 +17,11 @@ get_memory_vsz() {
     echo `docker exec -it compose_${node} bash -c "ps -o vsz= -C ketod | tr -s ' '"`
 }
 
+get_memory_vsize() {
+    local node=$1
+    echo `docker exec -it compose_${node} bash -c "ps -o vsize= -C ketod | tr -s ' '"`
+}
+
 get_memory() {
     local node=$1
     local resident_memory_rss=`get_memory_rss ${node}`
@@ -55,6 +60,7 @@ node_check() {
 
     local memory_rss=`get_memory_rss "${node}"`
     local memory_vsz=`get_memory_vsz "${node}"`
+    local memory_vsize=`get_memory_vsize "${node}"`
     printf "%10s %4s %4s %4s  %8s\n" ${node} ${network} ${block_status} ${producer_count} ${memory_rss}
 }
 

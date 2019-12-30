@@ -83,10 +83,12 @@ services:
       - ../../build/install/bin/:/opt/keto/bin/
       - ../../build/install/lib/:/opt/keto/lib/
       - ../../build/install/shared/:/opt/keto/shared/
+      - ../../build/install/document_root/:/opt/keto/document_root/
       - ../../build/install/config/genesis.json:/opt/keto/config/genesis.json
       - master-data:/opt/keto/data/
     cap_add:
       - SYS_PTRACE
+      - SYS_ADMIN
   node1:
     image: keto/build-dev
     build:
@@ -105,11 +107,13 @@ services:
       - ../../build/install/bin/:/opt/keto/bin/
       - ../../build/install/lib/:/opt/keto/lib/
       - ../../build/install/shared/:/opt/keto/shared/
+      - ../../build/install/document_root/:/opt/keto/document_root/
       - node1-data:/opt/keto/data/
     depends_on:
       - master
     cap_add:
       - SYS_PTRACE
+      - SYS_ADMIN
   node2:
     image: keto/build-dev
     build:
@@ -128,11 +132,13 @@ services:
       - ../../build/install/bin/:/opt/keto/bin/
       - ../../build/install/lib/:/opt/keto/lib/
       - ../../build/install/shared/:/opt/keto/shared/
+      - ../../build/install/document_root/:/opt/keto/document_root/
       - node2-data:/opt/keto/data/
     depends_on:
       - master
     cap_add:
       - SYS_PTRACE
+      - SYS_ADMIN
   node3:
     image: keto/build-dev
     build:
@@ -151,11 +157,13 @@ services:
       - ../../build/install/bin/:/opt/keto/bin/
       - ../../build/install/lib/:/opt/keto/lib/
       - ../../build/install/shared/:/opt/keto/shared/
+      - ../../build/install/document_root/:/opt/keto/document_root/
       - node3-data:/opt/keto/data/
     depends_on:
       - master
     cap_add:
       - SYS_PTRACE
+      - SYS_ADMIN
   node4:
     image: keto/build-dev
     build:
@@ -174,11 +182,13 @@ services:
       - ../../build/install/bin/:/opt/keto/bin/
       - ../../build/install/lib/:/opt/keto/lib/
       - ../../build/install/shared/:/opt/keto/shared/
+      - ../../build/install/document_root/:/opt/keto/document_root/
       - node4-data:/opt/keto/data/
     depends_on:
       - master
     cap_add:
       - SYS_PTRACE
+      - SYS_ADMIN
   readnode:
     image: keto/build-dev
     build:
@@ -195,11 +205,13 @@ services:
       - ../../build/install/bin/:/opt/keto/bin/
       - ../../build/install/lib/:/opt/keto/lib/
       - ../../build/install/shared/:/opt/keto/shared/
+      - ../../build/install/document_root/:/opt/keto/document_root/
       - readnode-data:/opt/keto/data/
     depends_on:
       - master
     cap_add:
       - SYS_PTRACE
+      - SYS_ADMIN
 
 
 volumes:
