@@ -12,14 +12,38 @@ syncs:
     src: ../../src/web/keto-wallet
     sync_host_ip: 'auto'
     sync_strategy: 'unison'
+    watch_excludes: ['\.git', '\.gitignore', '.*\.md']
+    sync_args:
+      - "-ignore='Path .git'"
   explorer-sync:
     notify_terminal: true
     src: ../../src/web/keto-blockchain-explorer
     sync_host_ip: 'auto'
     sync_strategy: 'unison'
+    watch_excludes: ['\.git', '\.gitignore', '.*\.md']
+    sync_args:
+      - "-ignore='Path .git'"
   gateway-sync:
     notify_terminal: true
     src: ../../src/web/keto-middlware-proxy
     sync_host_ip: 'auto'
     sync_strategy: 'unison'
+    watch_excludes: ['\.git', '\.gitignore', '.*\.md']
+    sync_args:
+      - "-ignore='Path .git'"
+  oauth-sync:
+    notify_terminal: true
+    src: ../../src/web/avertem-openid
+    sync_host_ip: 'auto'
+    sync_strategy: 'unison'
+    watch_excludes: ['\.git', '\.gitignore', '.*\.md']
+    sync_args:
+      - "-ignore='Path .git'"
+  restapi-sync:
+    notify_terminal: true
+    src: ../../src/web/avertem-restapi
+    sync_host_ip: 'auto'
+    watch_excludes: ['\.git', '\.gitignore', '.*\.md']
+    sync_args:
+      - "-ignore='Path .git'"
 

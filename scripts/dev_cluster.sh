@@ -98,6 +98,24 @@ fi
 
 CURRENT_STATE="$(check_state)"
 
+checkForNetwork() {
+    local network_name=$1
+    echo $(docker network ls | grep ${network_name} | wc -l)
+}
+
+startAvertemNetwork() {
+    local network_available=$(checkForNetwork avertem)
+    if [ ${network_available} -eq 0 ]
+    then 
+    docker network create avertem
+    fi
+}
+
+stopAvertemNetwork() {
+    #docker network rm avertem
+    echo "stop avertem network"
+}
+
 if [ "${COMMAND}" == "start" ]
 then
     if [ -n "$CURRENT_STATE" ]
@@ -105,7 +123,7 @@ then
         echo "Running"
         exit 0
     fi
-    cd ${COMPOSE_DIR} && docker-sync start && docker-compose up -d
+    cd ${COMPOSE_DIR} && startAvertemNetwork && docker-sync start && docker-compose up -d
 elif [ "${COMMAND}" == "rebuild" ]
 then
     if [ -n "$CURRENT_STATE" ]
@@ -116,7 +134,7 @@ then
     cd ${COMPOSE_DIR} && docker-sync start && docker-compose up --build --always-recreate-deps --force-recreate -d
 elif [ "${COMMAND}" == "stop" ]
 then
-    cd ${COMPOSE_DIR} && docker-compose stop && docker-sync stop
+    cd ${COMPOSE_DIR} && docker-compose stop && docker-sync stop && stopAvertemNetwork
 elif [ "${COMMAND}" == "status" ]
 then
     cd ${COMPOSE_DIR} && docker-compose ps

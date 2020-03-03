@@ -13,6 +13,8 @@ services:
       - node3
       - node4
       - readnode
+    networks:
+      - avertem
   nginx-wallet: 
     image: nginx:latest
     ports:
@@ -22,6 +24,8 @@ services:
     depends_on:
       - wallet
       - readnode
+    networks:
+      - avertem
   nginx-explorer: 
     image: nginx:latest
     ports:
@@ -32,38 +36,99 @@ services:
       - explorer
       - readnode
       - gateway
+    networks:
+      - avertem
   wallet:
     image: node:11
     volumes:
       - wallet-sync:/usr/src/service
-      - wallet_node_modules:/user/src/service/node_modules
+      - wallet_node_modules:/usr/src/service/node_modules
       - ../../src/protocol/proto/HandShake.proto:/usr/src/service/HandShake.proto
       - ../../src/protocol/proto/BlockChain.proto:/usr/src/service/BlockChain.proto
     working_dir: /usr/src/service
     command: bash -c "npm install && npm run start"
     depends_on:
       - readnode
+    networks:
+      - avertem
   explorer:
     image: node:11
     volumes:
       - explorer-sync:/usr/src/service
-      - explorer_node_modules:/user/src/service/node_modules
+      - explorer_node_modules:/usr/src/service/node_modules
     working_dir: /usr/src/service
     command: bash -c "npm install && npm run start"
     depends_on:
       - readnode
+    networks:
+      - avertem
   gateway:
     image: node:11
     restart: on-failure
     volumes:
       - gateway-sync:/usr/src/service
-      - explorer_node_modules:/user/src/service/node_modules
+      - gateway_node_modules:/usr/src/service/node_modules
       - ../../keys/cli/private_key.pem:/usr/src/service/private_key.pem
       - ../../src/protocol/proto/HandShake.proto:/usr/src/service/HandShake.proto
     working_dir: /usr/src/service
     command: bash -c "npm install && npm start"
     depends_on:
       - readnode
+    networks:
+      - avertem
+  oauth:
+    image: node:11
+    restart: on-failure
+    environment:
+      - DATABASE_URL=postgres://postgres:example@postgres/postgres
+      - COOKIE_SESSION_KEY=avertem_key
+      - AVERTEM_READ_SERVER=http://nginx-wallet:8081/keto_api
+    volumes:
+      - oauth-sync:/usr/src/service
+      - oauth_node_modules:/usr/src/service/node_modules
+      - oauth_client_node_modules:/usr/src/service/oauth-client/node_modules
+      - ../../src/protocol/proto/HandShake.proto:/usr/src/service/HandShake.proto
+      - ../../src/protocol/proto/BlockChain.proto:/usr/src/service/BlockChain.proto
+    working_dir: /usr/src/service
+    command: bash -c "./run_oauth.sh"
+    depends_on:
+      - readnode
+      - postgres
+    networks:
+      - avertem
+  restapi:
+    image: node:11
+    restart: on-failure
+    environment:
+      - COOKIE_SESSION_KEY=avertem_key
+      - AVERTEM_SERVER=https://readnode:8080/
+      - AVERTEM_ACCOUNT=D594F22DC389E38B3DE7FA5630DBD9DCA16DA8A77097516FD37F9E25C6BE24D2
+      - AVERTEM_KEY=private_key.pem
+      - HAND_SHAKE=HandShake.proto
+      - AVERTEM_TOKEN=test2
+      - AVERTEM_INITIAL_ACCOUNT_VALUE=1000
+    volumes:
+      - restapi-sync:/usr/src/service
+      - restapi_node_modules:/usr/src/service/node_modules
+      - ../../keys/accounts/master/private_key.pem:/usr/src/service/private_key.pem
+      - ../../src/protocol/proto/HandShake.proto:/usr/src/service/HandShake.proto
+      - ../../src/protocol/proto/BlockChain.proto:/usr/src/service/BlockChain.proto
+    working_dir: /usr/src/service
+    command: bash -c "./run_restapi.sh"
+    depends_on:
+      - readnode
+    networks:
+      - avertem
+
+  postgres:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: example
+    volumes:
+      - ./postgres/oauth_schema.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - avertem
   master:
     image: keto/build-dev
     build:
@@ -89,6 +154,8 @@ services:
     cap_add:
       - SYS_PTRACE
       - SYS_ADMIN
+    networks:
+      - avertem
   node1:
     image: keto/build-dev
     build:
@@ -114,6 +181,8 @@ services:
     cap_add:
       - SYS_PTRACE
       - SYS_ADMIN
+    networks:
+      - avertem
   node2:
     image: keto/build-dev
     build:
@@ -139,6 +208,8 @@ services:
     cap_add:
       - SYS_PTRACE
       - SYS_ADMIN
+    networks:
+      - avertem
   node3:
     image: keto/build-dev
     build:
@@ -164,6 +235,8 @@ services:
     cap_add:
       - SYS_PTRACE
       - SYS_ADMIN
+    networks:
+      - avertem
   node4:
     image: keto/build-dev
     build:
@@ -189,6 +262,8 @@ services:
     cap_add:
       - SYS_PTRACE
       - SYS_ADMIN
+    networks:
+      - avertem
   readnode:
     image: keto/build-dev
     build:
@@ -212,12 +287,17 @@ services:
     cap_add:
       - SYS_PTRACE
       - SYS_ADMIN
+    networks:
+      - avertem
 
 
 volumes:
   wallet_node_modules:
   explorer_node_modules:
   gateway_node_modules:
+  oauth_node_modules:
+  oauth_client_node_modules:
+  restapi_node_modules:
   data_node_modules:
   master-data:
   node1-data:
@@ -231,3 +311,11 @@ volumes:
     external: true
   gateway-sync:
     external: true
+  oauth-sync:
+    external: true
+  restapi-sync:
+    external: true
+networks:
+  avertem:
+    external:
+      name: avertem
