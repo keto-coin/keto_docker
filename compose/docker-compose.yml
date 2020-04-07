@@ -106,7 +106,7 @@ services:
       - AVERTEM_KEY=private_key.pem
       - HAND_SHAKE=HandShake.proto
       - AVERTEM_TOKEN=test2
-      - AVERTEM_INITIAL_ACCOUNT_VALUE=1000
+      - AVERTEM_INITIAL_ACCOUNT_VALUE=100000
     volumes:
       - restapi-sync:/usr/src/service
       - restapi_node_modules:/usr/src/service/node_modules
