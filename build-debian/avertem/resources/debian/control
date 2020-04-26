@@ -1,0 +1,16 @@
+Source: avertem
+Section: unknown
+Priority: optional
+Maintainer: brett.chaldecott@gmail.com
+Build-Depends: debhelper (>=10)
+Standards-Version: VERSION_TAG
+Homepage: https://avertem.io
+
+Package: avertem
+Version: VERSION_TAG
+Maintainer: BurntJam
+Architecture: all
+Description: Avertem Blockchain
+Depends: ${misc:Depends}, ${shlibs:Depends}
+Breaks:
+Provides: avertem

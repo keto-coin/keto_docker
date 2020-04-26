@@ -1,0 +1,51 @@
+#!/bin/bash
+
+set -e
+
+. /usr/share/debconf/confmodule
+
+declare -A KEYMAP
+
+getAccountInfo() {
+    KEY_DATA=$(/opt/avertem/bin/avertem_cli.sh -A | awk -F"[{}]" '{print $2}')
+
+    #set -f                      # avoid globbing (expansion of *).
+    array=(${KEY_DATA//,/ })
+    for i in "${!array[@]}"
+    do
+        key_value=(${array[i]//:/ })
+        #echo "$i=>${key_value[0]} : ${key_value[1]}"
+        key=${key_value[0]//\"}
+        #echo "Key value"
+        value=${key_value[1]//\"}
+        #echo "set the value ${key}"
+        db_set avertem/${key} $value
+        #db_get avertem/${key} && value="$RET"
+        #echo "input the key"
+        db_input high avertem/${key}
+        #echo "get the value"
+        db_go || true
+
+        #db_get avertem/${key}
+        #KEYMAP[${key}]="$RET"
+
+    done
+}
+
+#while :; do
+#  RET=""
+#  db_input high avertem/account_hash || true
+#  db_go
+#  db_get avertem/account_hash
+#  # if password isn't empty we ask for password verification
+#  if [ ! -z "$RET" ]; then
+#    db_fset avertem/account_hash seen true
+#    ACCOUNT_HASH=$RET
+#    break
+#  fi
+#  db_set avertem/account_hash ""
+#  db_go
+#done
+
+
+getAccountInfo

@@ -1,8 +1,8 @@
 FROM ubuntu:18.04
 MAINTAINER Brett Chaldecott "brett.chaldecott@gmail.com"
 
-WORKDIR /opt/keto
-ADD install_dependencies.sh /opt/keto/install_dependencies.sh
+WORKDIR /opt/avertem
+ADD install_dependencies.sh /opt/avertem/install_dependencies.sh
 
 RUN apt-get update \
     && apt-get upgrade -y \
@@ -18,7 +18,7 @@ RUN apt-get update \
                                  gtk-doc-tools libxml2-dev libdb-dev \
                                  libpcre3 libpcre3-dev locales gdb \
     && locale-gen en_US.UTF-8 \
-    && /opt/keto/install_dependencies.sh
+    && /opt/avertem/install_dependencies.sh
 
 
 CMD tail -f /dev/null

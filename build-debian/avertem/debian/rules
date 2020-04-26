@@ -1,0 +1,45 @@
+#!/usr/bin/make -f
+# See debhelper(7) (uncomment to enable)
+# output every command that modifies files on the build system.
+DH_VERBOSE = 1
+# see FEATURE AREAS in dpkg-buildflags(1)
+#export DEB_BUILD_MAINT_OPTIONS = hardening=+all
+
+# see ENVIRONMENT in dpkg-buildflags(1)
+# package maintainers to append CFLAGS
+#export DEB_CFLAGS_MAINT_APPEND  = -Wall -pedantic
+# package maintainers to append LDFLAGS
+#export DEB_LDFLAGS_MAINT_APPEND = -Wl,--as-needed
+
+TMP:=$(CURDIR)/debian/avertem
+
+override_dh_auto_install: auto_install-stamp
+
+auto_install-stamp:
+	@echo "RULES.$@"
+	dh_testdir
+	dh_testroot
+	dh_prep
+	# some self written manpages which hopefully
+	# gets overwritten sooner or later with upstreams
+	mkdir -p $(TMP)/usr/share/man/man1/
+	mkdir -p $(TMP)/usr/share/man/man8/
+	cp -rf $(CURDIR)/opt $(TMP)/.
+	cp -rf $(CURDIR)/etc $(TMP)/.
+	cp -rf $(CURDIR)/lib $(TMP)/.
+	set +e; \
+	find ./debian/avertem/ -type f -print0 \
+	| xargs -0 --no-run-if-empty chrpath -k 2>/dev/null \
+	| fgrep RPATH= \
+	| cut -d: -f 1 \
+	| xargs --no-run-if-empty chrpath -d; \
+	set -e
+	dh_shlibdeps
+
+
+override_dh_shlibdeps:
+	@echo "RULES.$@"
+	dh_shlibdeps --dpkg-shlibdeps-params=--ignore-missing-info
+
+%:
+	dh $@ 

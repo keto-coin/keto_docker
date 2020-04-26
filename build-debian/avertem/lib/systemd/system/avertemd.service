@@ -1,0 +1,5 @@
+[Unit]
+Description=avetemd
+[Service]
+ExecStart=/opt/avertem/bin/avertemd.sh
+PrivateTmp=true

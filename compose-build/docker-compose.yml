@@ -1,24 +1,24 @@
 version: '3.3'
 services:
   build-container: 
-    image: brettchaldecott/keto-coin-dev:latest
+    image: avertem/avertem-dev:latest
     volumes:
-      - source-sync:/opt/keto/src/:nocopy
-      - ../../scripts/:/opt/keto/scripts/
-      - ../../builds:/opt/keto/builds/
-      - ../../builds/scripts/build_in_docker.sh:/opt/keto/build.sh
-      - ../../Doxyfile:/opt/keto/Doxyfile
-      - ../../CMakeLists.txt:/opt/keto/CMakeLists.txt
-      - depsbuild-sync:/opt/keto/deps_build/:nocopy
-      - build-sync:/opt/keto/build/:nocopy
-      - ide-sync:/opt/keto/ide_build/:nocopy
-      - ../../LICENSE.md:/opt/keto/LICENSE.md
-      - ../../deps_build/CMakeLists.txt:/opt/keto/deps_build/CMakeLists.txt
-      - ../../documents/:/opt/keto/documents/
-      - ../../resources/:/opt/keto/resources/
-      - ../../keys/:/opt/keto/keys/
-      - ../../contracts/:/opt/keto/contracts/
-      - ../../keto.doxygen.in:/opt/keto/keto.doxygen.in
+      - source-sync:/opt/avertem/src/:nocopy
+      - ../../scripts/:/opt/avertem/scripts/
+      - ../../builds:/opt/avertem/builds/
+      - ../../builds/scripts/build_in_docker.sh:/opt/avertem/build.sh
+      - ../../Doxyfile:/opt/avertem/Doxyfile
+      - ../../CMakeLists.txt:/opt/avertem/CMakeLists.txt
+      - depsbuild-sync:/opt/avertem/deps_build/:nocopy
+      - build-sync:/opt/avertem/build/:nocopy
+      - ide-sync:/opt/avertem/ide_build/:nocopy
+      - ../../LICENSE.md:/opt/avertem/LICENSE.md
+      - ../../deps_build/CMakeLists.txt:/opt/avertem/deps_build/CMakeLists.txt
+      - ../../documents/:/opt/avertem/documents/
+      - ../../resources/:/opt/avertem/resources/
+      - ../../keys/:/opt/avertem/keys/
+      - ../../contracts/:/opt/avertem/contracts/
+      - ../../avertem.doxygen.in:/opt/avertem/avertem.doxygen.in
       - dependency-sync:/opt/dependencies/:nocopy
     environment:
       - HOME=/

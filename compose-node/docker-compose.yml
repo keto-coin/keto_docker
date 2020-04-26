@@ -1,0 +1,25 @@
+version: '3.3'
+services:
+  docker_node:
+    image: avertem/avertem
+    build:
+      context: ../build/
+      dockerfile: Dockerfile
+    privileged: true
+    command: /opt/avertem/run_avertem.sh
+    environment:
+      - KETO_rpc_peer=master
+      - KETO_consensus_keys=
+      - PRODUCER_ENABLED="false"
+      - KETO_TAIL=true
+    cap_add:
+      - SYS_PTRACE
+      - SYS_ADMIN
+    networks:
+      - avertem
+
+
+networks:
+  avertem:
+    external:
+      name: avertem

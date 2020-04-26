@@ -1,0 +1,96 @@
+#!/bin/bash
+
+set -e
+
+. /usr/share/debconf/confmodule
+
+#echo "Hello world"
+
+#declare -A KEYMAP
+
+#getAccountInfo() {
+#    KEY_DATA=$(/opt/avertem/bin/avertem_cli.sh -A | awk -F"[{}]" '{print $2}')
+#
+#    #set -f                      # avoid globbing (expansion of *).
+#    array=(${KEY_DATA//,/ })
+#    for i in "${!array[@]}"
+#    do
+#        key_value=(${array[i]//:/ })
+#        echo "$i=>${key_value[0]} : ${key_value[1]}"
+#        key=${key_value[0]//\"}
+#        value=${key_value[1]//\"}
+#        db_set avertem/${key} $value
+#        #db_get avertem/${key} && value="$RET"
+#        db_input high avertem/${key}
+#        db_go || true
+#
+#        db_get avertem/${key}
+#        KEYMAP[${key}]="$RET"
+#
+#    done
+#}
+
+#db_get avertem/account_hash && account_hash="$RET"
+
+case "$1" in
+      configure)
+        #getAccountInfo
+        KETO_CONFIG=/opt/avertem/config/config.ini
+        declare -A KEYMAP
+        db_get avertem/account_hash
+        KEYMAP[account_hash]="$RET"
+        db_get avertem/private_key
+        KEYMAP[private_key]="$RET"
+        db_get avertem/public_key
+        KEYMAP[public_key]="$RET"
+
+
+        cat << EOF >> $KETO_CONFIG
+base-data-dir= var/db
+# log directory
+log-file=avertemd_%N.log
+# log level
+log-level=info
+# the account hash
+account-hash=${KEYMAP["account_hash"]}
+# public key dir
+public-key-dir=keys/avertemd/public
+# server public and private key
+server-private-key=${KEYMAP["private_key"]}
+server-public-key=${KEYMAP["public_key"]}
+# block chain files
+block_meta_index=data/block_meta_index
+blocks=data/blocks
+transactions=data/transactions
+accounts=data/accounts
+childs=data/childs
+accounts_mapping=data/accounts_mapping
+nested=data/nested
+# key store
+key_store=data/key_store
+# graph configuration
+graph_base_dir=data/graph_base_dir
+# router
+routes=data/routes
+# genesis
+#genesis_config=config/genesis.json
+# default block
+default_block=false
+block_producer_enabled=false
+block_producer_safe_mode=false
+rpc-peer=34.241.60.196
+consensus-keys=
+peers=data/peers
+# auto upgrade
+check_script=upgrade/ubuntu.sh
+auto_update=true
+# network protocol
+network_protocol_delay=10
+network_protocol_count=10
+faucet_account=D594F22DC389E38B3DE7FA5630DBD9DCA16DA8A77097516FD37F9E25C6BE24D2
+EOF
+
+# enable avertemd
+# systemctl enable avertemd
+
+esac

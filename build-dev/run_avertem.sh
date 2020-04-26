@@ -2,26 +2,26 @@
 
 
 echo "Setup the configuration"
-setup_output=$(/opt/keto/setup_config.sh)
+setup_output=$(/opt/avertem/setup_config.sh)
 setup_result=$?
 
 echo "Result ${setup_result} output ${setup_output}"
 
 
 echo "Confirm configration changes"
-cat /opt/keto/config/config.ini 
+cat /opt/avertem/config/config.ini 
 
 #echo "Tail the log files"
-#tail -f /opt/keto/log/ketod_* &
+#tail -f /opt/avertem/log/avertem_* &
 #tail_pid=$!
 #echo "Tail started with pid of ${tail_pid}"
 
-echo "Start keto"
-/opt/keto/bin/ketod.sh &
-ketod_pid=$!
-echo "Keto started with a PID of ${ketod_pid}"
+echo "Start Avertem"
+/opt/avertem/bin/avertemd.sh &
+avertem_pid=$!
+echo "Avertem started with a PID of ${avertem_pid}"
 
-pid_array=(${ketod_pid})
+pid_array=(${avertem_pid})
 
 if [ -n "${KETO_TAIL}" ] ; then
     tail -f /dev/null

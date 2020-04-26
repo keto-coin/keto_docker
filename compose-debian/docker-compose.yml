@@ -1,0 +1,27 @@
+version: '3.3'
+services:
+  package-container:
+    image: avertem/avertem-image:latest
+    volumes:
+      - ../../build/install/bin/:/opt/avertem/bin/
+      - ../../build/install/lib/:/opt/avertem/lib/
+      - ../../build/install/shared/:/opt/avertem/shared/
+      - ../../build/install/document_root/:/opt/avertem/document_root/
+      - ../../build/install/upgrade/:/opt/avertem/upgrade/
+      - ../../build/install/keys/:/opt/avertem/keys/
+      - ../../release/:/opt/avertem/target/
+    environment:
+      - HOME=/
+    command: bash -c "/opt/avertem/build.sh build /opt/avertem 1.0.0"
+
+volumes:
+  build-sync:
+    external: true
+  source-sync:
+    external: true
+  dependency-sync:
+    external: true
+  depsbuild-sync:
+    external: true
+  ide-sync:
+    external: true

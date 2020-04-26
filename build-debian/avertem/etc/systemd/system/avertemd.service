@@ -1,0 +1,8 @@
+[Unit]
+Description=Avertem
+
+[Service]
+ExecStart=/opt/avertem/bin/avertemd.sh
+
+[Install]
+WantedBy=multi-user.target
