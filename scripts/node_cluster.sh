@@ -18,4 +18,10 @@ then
     #NODE_ID=`echo $DATE | cksum | cut -f1 -d" "`
     #cd ${COMPOSE_DIR} && NODE_ID=$NODE_ID docker-compose up
     cd ${COMPOSE_DIR} && docker-compose down && docker-compose build --no-cache && docker-compose up
+elif [ "${NODE}" == "build" ] ;
+then
+    #DATE=`date`
+    #NODE_ID=`echo $DATE | cksum | cut -f1 -d" "`
+    #cd ${COMPOSE_DIR} && NODE_ID=$NODE_ID docker-compose up
+    cd ${COMPOSE_DIR} && docker-compose down && docker-compose build --no-cache
 fi

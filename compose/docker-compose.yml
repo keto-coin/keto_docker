@@ -264,6 +264,8 @@ services:
       - SYS_ADMIN
     networks:
       - avertem
+    ports:
+      - "28003:28003"
   readnode:
     image: avertem/build-dev
     build:
