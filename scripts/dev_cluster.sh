@@ -4,22 +4,22 @@ declare -a logs
 
 get_logs() {
     local node=$1
-    echo -e "$(docker exec -it compose_${node} bash -c 'cat /opt/avertem/log/avertemd_*.log')"
+    echo -e "$(docker exec compose_${node} bash -c 'cat /opt/avertem/log/avertemd_*.log')"
 }
 
 get_memory_rss() {
     local node=$1
-    echo `docker exec -it compose_${node} bash -c "ps -o rss= -C avertemd | tr -s ' '"`
+    echo `docker exec compose_${node} bash -c "ps -o rss= -C avertemd | tr -s ' '"`
 }
 
 get_memory_vsz() {
     local node=$1
-    echo `docker exec -it compose_${node} bash -c "ps -o vsz= -C avertemd | tr -s ' '"`
+    echo `docker exec compose_${node} bash -c "ps -o vsz= -C avertemd | tr -s ' '"`
 }
 
 get_memory_vsize() {
     local node=$1
-    echo `docker exec -it compose_${node} bash -c "ps -o vsize= -C avertemd | tr -s ' '"`
+    echo `docker exec compose_${node} bash -c "ps -o vsize= -C avertemd | tr -s ' '"`
 }
 
 get_memory() {
