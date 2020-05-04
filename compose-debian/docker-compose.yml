@@ -12,7 +12,7 @@ services:
       - ../../release/:/opt/avertem/target/
     environment:
       - HOME=/
-    command: bash -c "/opt/avertem/build.sh build /opt/avertem 1.0.0"
+    command: bash -c "/opt/avertem/build.sh build /opt/avertem ${VERSION_NUMBER}"
 
 volumes:
   build-sync:
