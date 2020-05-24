@@ -72,8 +72,8 @@ peers=data/peers
 check_script=upgrade/ubuntu.sh
 auto_update=false
 # network protocol
-network_protocol_delay=10
-network_protocol_count=10
+network_protocol_delay=20
+network_protocol_count=6
 faucet_account=D594F22DC389E38B3DE7FA5630DBD9DCA16DA8A77097516FD37F9E25C6BE24D2
 EOF
 
@@ -86,7 +86,7 @@ master_password=123456
 master-public-key=keys/avertemd/master/public_key.pem
 master-private-key=keys/avertemd/master/private_key.pem
 network_fee_ratio=1
-network_session_length=10
+network_session_length=120
 network_consensus_heartbeat=60
 EOF
 fi
