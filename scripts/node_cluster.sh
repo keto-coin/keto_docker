@@ -6,6 +6,7 @@ if [ -z "$NODE" ] ;
 then
     echo "Must select the appropriate NODE"    
     echo "   spawn - spawn"
+    echo "   build - build"
     exit -1
 fi
 

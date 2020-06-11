@@ -97,6 +97,12 @@ setCoreConfig() {
     echo '/opt/avertem/core/core.%h.%e.%t' > /proc/sys/kernel/core_pattern
 }
 
+setupGenesis() {
+    if [ -n "$KETO_genesis_values" ] ; then
+        echo $KETO_genesis_values > /opt/avertem/config/genesis.json
+    fi
+}
+
 getAccountInfo
 
 if [ -z "${KETO_rpc_peer}" ] ; then
@@ -117,5 +123,6 @@ if [ -n "${PRODUCER_ENABLED}" ] ; then
 fi
 
 setKetoConfig
+setupGenesis
 
 
