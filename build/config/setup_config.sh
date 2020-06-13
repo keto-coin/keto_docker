@@ -98,8 +98,9 @@ setCoreConfig() {
 }
 
 setupGenesis() {
-    if [ -n "$KETO_genesis_values" ] ; then
-        echo $KETO_genesis_values > /opt/avertem/config/genesis.json
+    if [ -n "$KETO_genesis_url" ] ; then
+        echo curl "${$KETO_genesis_url}" --output /opt/avertem/config/genesis.json
+        curl "${$KETO_genesis_url}" --output /opt/avertem/config/genesis.json
     fi
 }
 
