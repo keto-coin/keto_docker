@@ -27,6 +27,14 @@ getAccountInfo() {
     done
 }
 
+hostName() {
+    if [ -n "${KETO_hostname}" ] ; then
+        echo "external-hostname=${KETO_hostname}"
+    else
+        echo "external-hostname="
+    fi
+}
+
 setKetoConfig() {
     KETO_CONFIG=/opt/avertem/config/config.ini
 
@@ -75,6 +83,7 @@ auto_update=false
 network_protocol_delay=20
 network_protocol_count=6
 faucet_account=D594F22DC389E38B3DE7FA5630DBD9DCA16DA8A77097516FD37F9E25C6BE24D2
+$(hostName)
 EOF
 
 if [ -n "${KETO_IS_MASTER}" ] ; then
