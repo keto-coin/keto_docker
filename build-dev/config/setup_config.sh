@@ -78,7 +78,7 @@ consensus-keys=${KEYMAP["consensus_keys"]}
 peers=data/peers
 # auto upgrade
 check_script=upgrade/ubuntu.sh
-auto_update=true
+auto_update=false
 # network protocol
 network_protocol_delay=20
 network_protocol_count=6
