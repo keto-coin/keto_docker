@@ -135,7 +135,7 @@ services:
       context: ../../
       dockerfile: ./docker/build-dev/Dockerfile
     privileged: true
-    command: /opt/avertem/run_avertem.sh
+      #command: /opt/avertem/run_avertem.sh
     environment:
       - KETO_account_hash=D594F22DC389E38B3DE7FA5630DBD9DCA16DA8A77097516FD37F9E25C6BE24D2
       - KETO_public_key=3082010B0282010200C126A170476DC6E7E4B1A6EE1993F48D8A1413387611BE063B308310AD5B6E26CCBAC841A3ED24823771C0DBDA6613A3A546168A67099CD8B2668A77E8AD8C22C3F1D2560A18B68C44E41DB6646B3C86881E9970B6BAFC8251CFE05D5ECCD6137841E14655A789293D41AD8F2763A7AF6D4ECDACB8A7F62A880A541CCDE68B6CC76EB5BF78600F55D020B80794368287D3514BDB242B31F55A55145A666B56855C3F9B1FF7FC1D5AE2EE87110CABD388BF4527BA3F69D02AF9B7D3471DCF9806BE07919100DF14DE34BB8814697E2CF582DEFE0BD47B8A2D841BECB421A0856A41280E8121A484A807027CD99DD09F2DD1EB44F23C43CDEA59971B2ECC2E8C338F0203010001
@@ -163,7 +163,7 @@ services:
       context: ../../
       dockerfile: ./docker/build-dev/Dockerfile
     privileged: true
-    command: /opt/avertem/run_avertem.sh
+      #command: /opt/avertem/run_avertem.sh
     environment:
       - KETO_rpc_peer=master
       - KETO_consensus_keys=
@@ -191,7 +191,7 @@ services:
       context: ../../
       dockerfile: ./docker/build-dev/Dockerfile
     privileged: true
-    command: /opt/avertem/run_avertem.sh
+      #command: /opt/avertem/run_avertem.sh
     environment:
       - KETO_rpc_peer=master
       - KETO_consensus_keys=
@@ -219,7 +219,7 @@ services:
       context: ../../
       dockerfile: ./docker/build-dev/Dockerfile
     privileged: true
-    command: /opt/avertem/run_avertem.sh
+      #command: /opt/avertem/run_avertem.sh
     environment:
       - KETO_rpc_peer=master
       - KETO_consensus_keys=
@@ -247,7 +247,7 @@ services:
       context: ../../
       dockerfile: ./docker/build-dev/Dockerfile
     privileged: true
-    command: /opt/avertem/run_avertem.sh
+      #command: /opt/avertem/run_avertem.sh
     environment:
       - KETO_rpc_peer=master
       - KETO_consensus_keys=
@@ -277,7 +277,7 @@ services:
       context: ../../
       dockerfile: ./docker/build-dev/Dockerfile
     privileged: true
-    command: /opt/avertem/run_avertem.sh
+      #command: /opt/avertem/run_avertem.sh
     environment:
       - KETO_rpc_peer=master
       - KETO_consensus_keys=

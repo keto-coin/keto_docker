@@ -31,6 +31,4 @@ RUN /opt/avertem/scripts/avertem_postinst.sh && echo "{}" > /opt/avertem/config/
 
 WORKDIR /opt/avertem
 
-CMD tail -f /dev/null
-
-
+ENTRYPOINT ["/opt/avertem/run_avertem.sh"]
