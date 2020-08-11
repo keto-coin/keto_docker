@@ -3,9 +3,12 @@
 _term() {
   echo "Caught SIGTERM signal!"
   for pid in ${pid_array[*]}; do
+     echo "Kill the pid with SIGINT ${pid}"
+     kill -s SIGINT "${pid}" 
      echo "Wait for ${pid}"
-     kill -TERM "${pid}" 2>/dev/null
+     wait $pid
   done
+  exit 0
 }
 
 echo "Setup the configuration"
