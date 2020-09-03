@@ -2,7 +2,7 @@
 
 
 declare -A KEYMAP
-KETO_PRODUCER_ENABLED="true"
+KETO_PRODUCER_ENABLED="false"
 
 getAccountInfo() {
     KEY_DATA=$(/opt/avertem/bin/avertem_cli.sh -A | awk -F"[{}]" '{print $2}')
