@@ -14,6 +14,7 @@ syncs:
     watch_excludes: ['\.git', '\.gitignore', '.*\.md']
     sync_args:
       - "-ignore='Path .git'"
+    sync_strategy: 'unison'
   explorer-sync:
     #notify_terminal: true
     src: ../../src/web/keto-blockchain-explorer
@@ -21,6 +22,7 @@ syncs:
     watch_excludes: ['\.git', '\.gitignore', '.*\.md']
     sync_args:
       - "-ignore='Path .git'"
+    sync_strategy: 'unison'
   gateway-sync:
     #notify_terminal: true
     src: ../../src/web/keto-middlware-proxy
@@ -28,6 +30,7 @@ syncs:
     watch_excludes: ['\.git', '\.gitignore', '.*\.md']
     sync_args:
       - "-ignore='Path .git'"
+    sync_strategy: 'unison'
   oauth-sync:
     #notify_terminal: true
     src: ../../src/web/avertem-openid
@@ -35,6 +38,7 @@ syncs:
     watch_excludes: ['\.git', '\.gitignore', '.*\.md']
     sync_args:
       - "-ignore='Path .git'"
+    sync_strategy: 'unison'
   restapi-sync:
     #notify_terminal: true
     src: ../../src/web/avertem-restapi
@@ -42,4 +46,5 @@ syncs:
     watch_excludes: ['\.git', '\.gitignore', '.*\.md']
     sync_args:
       - "-ignore='Path .git'"
+    sync_strategy: 'unison'
 

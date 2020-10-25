@@ -6,20 +6,25 @@ syncs:
     #notify_terminal: true
     src: ../../build/
     sync_host_ip: 'auto'
+    sync_strategy: 'unison'
   source-sync:
     #notify_terminal: true
     src: ../../src/
     sync_host_ip: 'auto'
+    sync_strategy: 'unison'
   dependency-sync:
     #notify_terminal: true
     src: ../../dependencies/
     sync_host_ip: 'auto'
+    sync_strategy: 'unison'
   depsbuild-sync:
     #notify_terminal: true
     src: ../../deps_build/
     sync_host_ip: 'auto'
+    sync_strategy: 'unison'
   ide-sync:
     #notify_terminal: true
     src: ../../ide_build/
     sync_host_ip: 'auto'
+    sync_strategy: 'unison'
 
