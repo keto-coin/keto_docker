@@ -110,8 +110,8 @@ git clone https://github.com/facebook/rocksdb.git
 cd rocksdb
 mkdir -p ${HOME}/opt/rocksdb/
 #EXTRA_CFLAGS=-fPIC EXTRA_CXXFLAGS=-fPIC PORTABLE=1 make static_lib
-INSTALL_PATH=${HOME}/opt/rocksdb/ EXTRA_CFLAGS=-fPIC EXTRA_CXXFLAGS=-fPIC PORTABLE=1 make static_lib
-INSTALL_PATH=${HOME}/opt/rocksdb/ EXTRA_CFLAGS=-fPIC EXTRA_CXXFLAGS=-fPIC PORTABLE=1 make install
+PREFIX=${HOME}/opt/rocksdb/ EXTRA_CFLAGS=-fPIC EXTRA_CXXFLAGS=-fPIC PORTABLE=1 make static_lib
+PREFIX=${HOME}/opt/rocksdb/ EXTRA_CFLAGS=-fPIC EXTRA_CXXFLAGS=-fPIC PORTABLE=1 make install
 #mkdir -p ${HOME}/opt/rocksdb/
 #mkdir -p ${HOME}/opt/rocksdb/lib
 #mkdir -p ${HOME}/opt/rocksdb/lib
@@ -161,13 +161,24 @@ make install
 cd ${HOME}
 rm -rf ${TEMP_DIR}/botan
 
-# rdf libraries 
+# rdf dependencies 
 mkdir -p ${HOME}/opt/librdf
+cd ${TEMP_DIR}
+wget http://ftp.gnu.org/gnu/bison/bison-3.4.tar.gz
+tar -zxvf bison-3.4.tar.gz
+cd bison-3.4
+./configure
+make
+make install
+cd ${HOME}
+rm -rf ${TEMP_DIR}/bison-3.4
+
+# rdf libraries 
 cd ${TEMP_DIR}
 git clone git://github.com/dajobe/raptor.git
 cd ${TEMP_DIR}/raptor
-sed -i "/\$1\${prefix}cleanup(yyscanner)\;/d" scripts/fix-flex.pl
-sed -i "/-Werror-implicit-function-declaration/d" configure.ac
+#sed -i "/\$1\${prefix}cleanup(yyscanner)\;/d" scripts/fix-flex.pl
+#sed -i "/-Werror-implicit-function-declaration/d" configure.ac
 CFLAGS=-fPIC CPPFLAGS=-fPIC ./autogen.sh --prefix=${HOME}/opt/librdf --enable-shared=no
 make
 make install
@@ -177,8 +188,8 @@ rm -rf ${TEMP_DIR}/raptor
 cd ${TEMP_DIR}
 git clone git://github.com/dajobe/rasqal.git
 cd ${TEMP_DIR}/rasqal
-sed -i "/\$1\${prefix}cleanup(yyscanner)\;/d" scripts/fix-flex.pl
-sed -i "/-Werror-implicit-function-declaration/d" configure.ac
+#sed -i "/\$1\${prefix}cleanup(yyscanner)\;/d" scripts/fix-flex.pl
+#sed -i "/-Werror-implicit-function-declaration/d" configure.ac
 CFLAGS=-fPIC CPPFLAGS=-fPIC PKG_CONFIG_PATH=${HOME}/opt/librdf/lib/pkgconfig ./autogen.sh --prefix=${HOME}/opt/librdf --enable-shared=no
 make
 make install
@@ -188,7 +199,7 @@ rm -rf ${TEMP_DIR}/rasqal
 cd ${TEMP_DIR}
 git clone https://github.com/keto-coin/librdf.git
 cd ${TEMP_DIR}/librdf
-sed -i "/-Werror-implicit-function-declaration/d" configure.ac
+#sed -i "/-Werror-implicit-function-declaration/d" configure.ac
 CFLAGS=-fPIC CPPFLAGS=-fPIC PKG_CONFIG_PATH=${HOME}/opt/librdf/lib/pkgconfig ./autogen.sh --prefix=${HOME}/opt/librdf --enable-shared=no --with-bdb --with-threads
 make
 make install
