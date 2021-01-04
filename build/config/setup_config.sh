@@ -78,7 +78,7 @@ consensus-keys=${KEYMAP["consensus_keys"]}
 peers=data/peers
 # auto upgrade
 check_script=upgrade/ubuntu.sh
-auto_update=true
+auto_update=${KEYMAP["upgrade"]}
 # network protocol
 network_protocol_delay=20
 network_protocol_count=6
@@ -130,6 +130,11 @@ fi
 
 if [ -n "${PRODUCER_ENABLED}" ] ; then
     KETO_PRODUCER_ENABLED="${PRODUCER_ENABLED}"
+fi
+
+KEYMAP["upgrade"]="true"
+if [ -n "${UPGRADE_DISABLED}" ] ; then
+    KEYMAP["upgrade"]="false"
 fi
 
 setKetoConfig

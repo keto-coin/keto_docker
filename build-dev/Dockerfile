@@ -18,6 +18,7 @@ RUN apt-get update \
                                  bison libbison-dev flex libfl-dev \
                                  gtk-doc-tools libxml2-dev libdb-dev \
                                  libpcre3 libpcre3-dev locales gdb \
+                                 valgrind \
     && locale-gen en_US.UTF-8 && \
     mkdir -p /opt/avertem/scripts/ && \
     mkdir -p /opt/avertem/log
