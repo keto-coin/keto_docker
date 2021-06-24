@@ -131,7 +131,7 @@ then
         echo "Running"
         exit 0
     fi
-    cd ${COMPOSE_DIR} && docker-sync start && docker-compose up --build --always-recreate-deps --force-recreate -d
+    cd ${COMPOSE_DIR} && startAvertemNetwork && docker-sync start && docker-compose up --build --always-recreate-deps --force-recreate -d
 elif [ "${COMMAND}" == "stop" ]
 then
     cd ${COMPOSE_DIR} && docker-compose stop && docker-sync stop && stopAvertemNetwork
