@@ -16,12 +16,7 @@ services:
 
 volumes:
   build-sync:
-    external: true
   source-sync:
-    external: true
   dependency-sync:
-    external: true
   depsbuild-sync:
-    external: true
   ide-sync:
-    external: true

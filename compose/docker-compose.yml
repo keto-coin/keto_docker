@@ -41,7 +41,7 @@ services:
   wallet:
     image: node:11
     volumes:
-      - wallet-sync:/usr/src/service
+      - ../../src/web/keto-wallet:/usr/src/service
       - wallet_node_modules:/usr/src/service/node_modules
       - ../../src/protocol/proto/HandShake.proto:/usr/src/service/HandShake.proto
       - ../../src/protocol/proto/BlockChain.proto:/usr/src/service/BlockChain.proto
@@ -54,7 +54,7 @@ services:
   explorer:
     image: node:11
     volumes:
-      - explorer-sync:/usr/src/service
+      - ../../src/web/keto-blockchain-explorer:/usr/src/service
       - explorer_node_modules:/usr/src/service/node_modules
     working_dir: /usr/src/service
     command: bash -c "npm install && npm run start"
@@ -66,7 +66,7 @@ services:
     image: node:11
     restart: on-failure
     volumes:
-      - gateway-sync:/usr/src/service
+      - ../../src/web/keto-middlware-proxy:/usr/src/service
       - gateway_node_modules:/usr/src/service/node_modules
       - ../../keys/cli/private_key.pem:/usr/src/service/private_key.pem
       - ../../src/protocol/proto/HandShake.proto:/usr/src/service/HandShake.proto
@@ -84,7 +84,7 @@ services:
       - COOKIE_SESSION_KEY=avertem_key
       - AVERTEM_READ_SERVER=http://nginx-wallet:8081/keto_api
     volumes:
-      - oauth-sync:/usr/src/service
+      - ../../src/web/avertem-openid:/usr/src/service
       - oauth_node_modules:/usr/src/service/node_modules
       - oauth_client_node_modules:/usr/src/service/oauth-client/node_modules
       - ../../src/protocol/proto/HandShake.proto:/usr/src/service/HandShake.proto
@@ -108,7 +108,7 @@ services:
       - AVERTEM_TOKEN=test2
       - AVERTEM_INITIAL_ACCOUNT_VALUE=100000
     volumes:
-      - restapi-sync:/usr/src/service
+      - ../../src/web/avertem-restapi:/usr/src/service
       - restapi_node_modules:/usr/src/service/node_modules
       - ../../keys/accounts/master/private_key.pem:/usr/src/service/private_key.pem
       - ../../src/protocol/proto/HandShake.proto:/usr/src/service/HandShake.proto
@@ -313,16 +313,6 @@ volumes:
   node3-data:
   node4-data:
   readnode-data:
-  wallet-sync:
-    external: true
-  explorer-sync:
-    external: true
-  gateway-sync:
-    external: true
-  oauth-sync:
-    external: true
-  restapi-sync:
-    external: true
 networks:
   avertem:
     external:

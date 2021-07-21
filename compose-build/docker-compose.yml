@@ -3,15 +3,15 @@ services:
   build-container: 
     image: avertem/avertem-dev:latest
     volumes:
-      - source-sync:/opt/avertem/src/:nocopy
+      - ../../src/:/opt/avertem/src/
       - ../../scripts/:/opt/avertem/scripts/
       - ../../builds:/opt/avertem/builds/
       - ../../builds/scripts/build_in_docker.sh:/opt/avertem/build.sh
       - ../../Doxyfile:/opt/avertem/Doxyfile
       - ../../CMakeLists.txt:/opt/avertem/CMakeLists.txt
-      - depsbuild-sync:/opt/avertem/deps_build/:nocopy
-      - build-sync:/opt/avertem/build/:nocopy
-      - ide-sync:/opt/avertem/ide_build/:nocopy
+      - ../../deps_build/:/opt/avertem/deps_build/
+      - ../../build/:/opt/avertem/build/
+      - ../../ide_build/:/opt/avertem/ide_build/
       - ../../LICENSE.md:/opt/avertem/LICENSE.md
       - ../../deps_build/CMakeLists.txt:/opt/avertem/deps_build/CMakeLists.txt
       - ../../documents/:/opt/avertem/documents/
@@ -19,18 +19,7 @@ services:
       - ../../keys/:/opt/avertem/keys/
       - ../../contracts/:/opt/avertem/contracts/
       - ../../avertem.doxygen.in:/opt/avertem/avertem.doxygen.in
-      - dependency-sync:/opt/dependencies/:nocopy
+      - ../../dependencies/:/opt/dependencies/
     environment:
       - HOME=/
 
-volumes:
-  build-sync:
-    external: true
-  source-sync:
-    external: true
-  dependency-sync:
-    external: true
-  depsbuild-sync:
-    external: true
-  ide-sync:
-    external: true

@@ -123,7 +123,7 @@ then
         echo "Running"
         exit 0
     fi
-    cd ${COMPOSE_DIR} && startAvertemNetwork && docker-sync start && docker-compose up -d
+    cd ${COMPOSE_DIR} && startAvertemNetwork && docker-compose up -d
 elif [ "${COMMAND}" == "rebuild" ]
 then
     if [ -n "$CURRENT_STATE" ]
@@ -131,10 +131,10 @@ then
         echo "Running"
         exit 0
     fi
-    cd ${COMPOSE_DIR} && startAvertemNetwork && docker-sync start && docker-compose up --build --always-recreate-deps --force-recreate -d
+    cd ${COMPOSE_DIR} && startAvertemNetwork && docker-compose up --build --always-recreate-deps --force-recreate -d
 elif [ "${COMMAND}" == "stop" ]
 then
-    cd ${COMPOSE_DIR} && docker-compose stop && docker-sync stop && stopAvertemNetwork
+    cd ${COMPOSE_DIR} && docker-compose stop && stopAvertemNetwork
 elif [ "${COMMAND}" == "status" ]
 then
     cd ${COMPOSE_DIR} && docker-compose ps
@@ -150,7 +150,7 @@ then
     cd ${COMPOSE_DIR} && docker-compose logs ${NODE}
 elif [ "${COMMAND}" == "clean" ]
 then
-    cd ${COMPOSE_DIR} && docker-compose down && docker-sync clean && docker volume prune -f
+    cd ${COMPOSE_DIR} && docker-compose down && docker volume prune -f
 elif [ "${COMMAND}" == "check" ]
 then
     echo -n "${CURRENT_STATE}"
