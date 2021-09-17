@@ -2,6 +2,7 @@ version: '3.3'
 services:
   package-container:
     image: avertem/avertem-image:latest
+    user: "${UID}:${GID}"
     volumes:
       - ../../build/install/bin/:/opt/avertem/bin/
       - ../../build/install/lib/:/opt/avertem/lib/

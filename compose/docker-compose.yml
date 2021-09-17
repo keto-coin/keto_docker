@@ -2,6 +2,7 @@ version: '3.3'
 services:
   nginx-api: 
     image: nginx:latest
+    user: "${UID}:${GID}"
     ports:
       - "8080:8080"
     volumes:
@@ -17,6 +18,7 @@ services:
       - avertem
   nginx-wallet: 
     image: nginx:latest
+    user: "${UID}:${GID}"
     ports:
       - "8081:8081"
     volumes:
@@ -28,6 +30,7 @@ services:
       - avertem
   nginx-explorer: 
     image: nginx:latest
+    user: "${UID}:${GID}"
     ports:
       - "8082:8082"
     volumes:
@@ -40,6 +43,7 @@ services:
       - avertem
   wallet:
     image: node:11
+    user: "${UID}:${GID}"
     volumes:
       - ../../src/web/keto-wallet:/usr/src/service
       - wallet_node_modules:/usr/src/service/node_modules
@@ -53,6 +57,7 @@ services:
       - avertem
   explorer:
     image: node:11
+    user: "${UID}:${GID}"
     volumes:
       - ../../src/web/keto-blockchain-explorer:/usr/src/service
       - explorer_node_modules:/usr/src/service/node_modules
@@ -64,6 +69,7 @@ services:
       - avertem
   gateway:
     image: node:11
+    user: "${UID}:${GID}"
     restart: on-failure
     volumes:
       - ../../src/web/keto-middlware-proxy:/usr/src/service
@@ -78,6 +84,7 @@ services:
       - avertem
   oauth:
     image: node:11
+    user: "${UID}:${GID}"
     restart: on-failure
     environment:
       - DATABASE_URL=postgres://postgres:example@postgres/postgres
@@ -98,6 +105,7 @@ services:
       - avertem
   restapi:
     image: node:11
+    user: "${UID}:${GID}"
     restart: on-failure
     environment:
       - COOKIE_SESSION_KEY=avertem_key
@@ -131,6 +139,7 @@ services:
       - avertem
   master:
     image: avertem/build-dev
+    user: "${UID}:${GID}"
     build:
       context: ../../
       dockerfile: ./docker/build-dev/Dockerfile
@@ -159,6 +168,7 @@ services:
       - avertem
   node1:
     image: avertem/build-dev
+    user: "${UID}:${GID}"
     build:
       context: ../../
       dockerfile: ./docker/build-dev/Dockerfile
@@ -187,6 +197,7 @@ services:
       - avertem
   node2:
     image: avertem/build-dev
+    user: "${UID}:${GID}"
     build:
       context: ../../
       dockerfile: ./docker/build-dev/Dockerfile
@@ -215,6 +226,7 @@ services:
       - avertem
   node3:
     image: avertem/build-dev
+    user: "${UID}:${GID}"
     build:
       context: ../../
       dockerfile: ./docker/build-dev/Dockerfile
@@ -243,6 +255,7 @@ services:
       - avertem
   node4:
     image: avertem/build-dev
+    user: "${UID}:${GID}"
     build:
       context: ../../
       dockerfile: ./docker/build-dev/Dockerfile
@@ -273,6 +286,7 @@ services:
       - "28003:28003"
   readnode:
     image: avertem/build-dev
+    user: "${UID}:${GID}"
     build:
       context: ../../
       dockerfile: ./docker/build-dev/Dockerfile
