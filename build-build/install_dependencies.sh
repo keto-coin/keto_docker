@@ -76,7 +76,7 @@ CMAKE_BUILD_TYPE=RelWithDebugInfo
 echo "Build boost"
 cd ${TEMP_DIR}
 export BOOST_ROOT=${HOME}/opt/boost_1_71_0
-curl -L https://dl.bintray.com/boostorg/release/1.71.0/source/boost_1_71_0.tar.bz2 > boost_1.71.0.tar.bz2
+curl -L https://boostorg.jfrog.io/artifactory/main/release/1.71.0/source/boost_1_71_0.tar.bz2 > boost_1.71.0.tar.bz2
 tar xvf boost_1.71.0.tar.bz2
 cd boost_1_71_0/
 ./bootstrap.sh "--prefix=$BOOST_ROOT"
@@ -97,7 +97,7 @@ rm -rf ${TEMP_DIR}/boost_1_71_0/
 cd ${TEMP_DIR}
 git clone https://github.com/WebAssembly/binaryen
 cd binaryen
-git checkout tags/1.37.14
+git checkout tags/version_102
 cmake . && make
 mkdir -p ${HOME}/opt/binaryen/
 cp -rf ${TEMP_DIR}/binaryen/bin ${HOME}/opt/binaryen/.
@@ -254,6 +254,7 @@ cd ${HOME}
 cd ${TEMP_DIR}
 git clone https://github.com/ElementsProject/libwally-core.git
 cd ${TEMP_DIR}/libwally-core
+git submodule update --init
 ./tools/autogen.sh
 ./configure "CFLAGS=-fPIC" "CXXFLAGS=-fPIC" --disable-shared --prefix=${HOME}/opt/libwally-core/
 make

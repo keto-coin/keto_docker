@@ -119,6 +119,8 @@ services:
       - readnode
     networks:
       - avertem
+    ports:
+      - "3000:3000"
 
   postgres:
     image: postgres
@@ -152,6 +154,7 @@ services:
       - ../../build/install/document_root/:/opt/avertem/document_root/
       - ../../build/install/config/genesis.json:/opt/avertem/config/genesis.json
       - master-data:/opt/avertem/data/
+      - ../../build/install/log/master/:/opt/avertem/log/
     cap_add:
       - SYS_PTRACE
       - SYS_ADMIN
@@ -178,6 +181,7 @@ services:
       - ../../build/install/shared/:/opt/avertem/shared/
       - ../../build/install/document_root/:/opt/avertem/document_root/
       - node1-data:/opt/avertem/data/
+      - ../../build/install/log/node1/:/opt/avertem/log/
     depends_on:
       - master
     cap_add:
@@ -206,6 +210,7 @@ services:
       - ../../build/install/shared/:/opt/avertem/shared/
       - ../../build/install/document_root/:/opt/avertem/document_root/
       - node2-data:/opt/avertem/data/
+      - ../../build/install/log/node2/:/opt/avertem/log/
     depends_on:
       - master
     cap_add:
@@ -234,6 +239,7 @@ services:
       - ../../build/install/shared/:/opt/avertem/shared/
       - ../../build/install/document_root/:/opt/avertem/document_root/
       - node3-data:/opt/avertem/data/
+      - ../../build/install/log/node3/:/opt/avertem/log/
     depends_on:
       - master
     cap_add:
@@ -262,6 +268,7 @@ services:
       - ../../build/install/shared/:/opt/avertem/shared/
       - ../../build/install/document_root/:/opt/avertem/document_root/
       - node4-data:/opt/avertem/data/
+      - ../../build/install/log/node4/:/opt/avertem/log/
     depends_on:
       - master
     cap_add:
@@ -289,6 +296,7 @@ services:
       - ../../build/install/lib/:/opt/avertem/lib/
       - ../../build/install/shared/:/opt/avertem/shared/
       - ../../build/install/document_root/:/opt/avertem/document_root/
+      - ../../build/install/log/readnode/:/opt/avertem/log/
       - readnode-data:/opt/avertem/data/
     depends_on:
       - master
