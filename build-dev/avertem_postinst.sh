@@ -49,6 +49,8 @@ blocks=data/blocks
 transactions=data/transactions
 accounts=data/accounts
 childs=data/childs
+nested=data/nested
+parents=data/parents
 accounts_mapping=data/accounts_mapping
 # key store
 key_store=data/key_store

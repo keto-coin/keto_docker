@@ -60,6 +60,7 @@ accounts=data/accounts
 childs=data/childs
 accounts_mapping=data/accounts_mapping
 nested=data/nested
+parents=data/parents
 # key store
 key_store=data/key_store
 # graph configuration
