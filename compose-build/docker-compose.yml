@@ -2,6 +2,7 @@ version: '3.3'
 services:
   build-container: 
     image: avertem/avertem-dev:latest
+    user: "${UID}:${GID}"
     volumes:
       - ../../src/:/opt/avertem/src/
       - ../../scripts/:/opt/avertem/scripts/

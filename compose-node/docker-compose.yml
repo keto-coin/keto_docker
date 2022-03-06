@@ -2,6 +2,7 @@ version: '3.3'
 services:
   docker_node:
     image: avertem/avertem
+    user: "${UID}:${GID}"
     build:
       context: ../build/
       dockerfile: Dockerfile
